@@ -79,7 +79,8 @@
     matchedCountLabel.textContent = String(state.snapshot.matchedCount || 0);
     nextRefreshLabel.textContent = state.snapshot.nextScheduledRefreshLocalText || "-";
     directionRuleLabel.textContent = state.snapshot.directionRuleText || "";
-    btcDirectionPill.textContent = state.snapshot.btcDirectionLabel || "等待 BTC 最新日 K 方向";
+    const baseTradingViewSymbol = state.snapshot.baseTradingViewSymbol || state.snapshot.baseSymbol || "DOGEUSDT.P";
+    btcDirectionPill.textContent = state.snapshot.btcDirectionLabel || `等待 ${baseTradingViewSymbol} 最新日 K 方向`;
     btcDirectionPill.className = `direction-pill direction-pill--${escapeHtml(state.snapshot.btcDirection || "flat")}`;
     btcChangeValue.textContent = state.snapshot.basePriceChangeText || "0.00%";
     btcChangeValue.className = `spotlight-value metric-value is-${getTrendClass(Number(state.snapshot.basePriceChangePercent || 0))}`;

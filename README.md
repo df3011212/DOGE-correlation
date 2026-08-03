@@ -1,13 +1,13 @@
-# BTCUSDT.P 相關係數網站
+# DOGEUSDT.P 相關係數網站
 
 這個專案現在是：
 
-- 基準：`BTCUSDT.P`
+- 基準：`DOGEUSDT.P`
 - 比較對象：Bitget 其他 `USDT` 永續合約
 - 比較週期：`1D` 天圖
 - 比較視窗：最近 `20` 根日 K 收盤價
 - 條件：相關係數 `0.70 ~ 1.00`
-- 方向條件：只保留和 BTC 最新日 K 同方向的標的
+- 方向條件：只保留和 DOGEUSDT.P 最新日 K 同方向的標的
 - 更新排程：每 `15` 分鐘重新抓一次資料
 
 ## 專案位置
@@ -48,9 +48,7 @@ GitHub Pages 設定方式：
 
 ## GitHub Actions
 
-repo 內目前有兩條 workflow：
+repo 內目前有一條 workflow：
 
-- `.github/workflows/dotnet-correlation-dashboard.yml`
-  作用：build / test ASP.NET 專案
 - `.github/workflows/update-correlation-pages.yml`
   作用：每 15 分鐘更新 GitHub Pages 靜態頁面

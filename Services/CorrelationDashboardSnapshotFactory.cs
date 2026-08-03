@@ -24,14 +24,14 @@ public static class CorrelationDashboardSnapshotFactory
             LastSuccessfulRefreshLocalText = "尚未成功更新",
             NextScheduledRefreshLocalText = FormatLocal(nowUtc + options.GetRefreshInterval(), timeZone),
             BtcDirection = "flat",
-            BtcDirectionLabel = "等待 BTC 最新日 K 方向",
+            BtcDirectionLabel = $"等待 {options.BaseTradingViewSymbol} 最新日 K 方向",
             BasePriceChangePercent = 0m,
             BasePriceChangeText = "0.00%",
             BaseLastClose = 0m,
             BaseLastCloseText = "-",
             TotalSymbolsScanned = 0,
             MatchedCount = 0,
-            DirectionRuleText = "資料更新後會顯示和 BTC 最新日 K 同方向、且相關係數介於 0.70 到 1.00 的標的。",
+            DirectionRuleText = $"資料更新後會顯示和 {options.BaseTradingViewSymbol} 最新日 K 同方向、且相關係數介於 {options.MinCorrelation:0.00} 到 {options.MaxCorrelation:0.00} 的標的。",
             Results = []
         };
     }

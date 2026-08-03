@@ -48,7 +48,7 @@ public sealed class BitgetCorrelationService
         var baseCloses = baseSeries.Select(point => point.Close).ToList();
         var baseLastClose = baseCloses[^1];
         var basePriceChangePercent = CalculatePriceChangePercent(baseCloses);
-        var (btcDirection, btcDirectionLabel, directionRuleText) = DescribeBaseDirection(basePriceChangePercent);
+        var (baseDirection, baseDirectionLabel, directionRuleText) = DescribeBaseDirection(basePriceChangePercent);
 
         var candidateSymbols = symbols
             .Where(symbol => !string.Equals(symbol, _options.BaseSymbol, StringComparison.OrdinalIgnoreCase))
@@ -124,8 +124,8 @@ public sealed class BitgetCorrelationService
             DateTimeOffset.UtcNow,
             baseLastClose,
             basePriceChangePercent,
-            btcDirection,
-            btcDirectionLabel,
+            baseDirection,
+            baseDirectionLabel,
             directionRuleText,
             candidateSymbols.Count,
             orderedResults);
@@ -220,22 +220,26 @@ public sealed class BitgetCorrelationService
         return ((closes[^1] - closes[^2]) / closes[^2]) * 100m;
     }
 
-    private static (string Direction, string Label, string RuleText) DescribeBaseDirection(decimal basePriceChangePercent)
+    private (string Direction, string Label, string RuleText) DescribeBaseDirection(decimal basePriceChangePercent)
     {
+        var baseDisplaySymbol = _options.BaseTradingViewSymbol;
+        var minCorrelation = _options.MinCorrelation.ToString("0.00", CultureInfo.InvariantCulture);
+        var maxCorrelation = _options.MaxCorrelation.ToString("0.00", CultureInfo.InvariantCulture);
+
         return basePriceChangePercent switch
         {
             > 0m => (
                 "up",
-                "BTC 最新日 K 上漲",
-                "只保留和 BTC 最新日 K 同方向上漲，且相關係數介於 0.70 到 1.00 的標的。"),
+                $"{baseDisplaySymbol} 最新日 K 上漲",
+                $"只保留和 {baseDisplaySymbol} 最新日 K 同方向上漲，且相關係數介於 {minCorrelation} 到 {maxCorrelation} 的標的。"),
             < 0m => (
                 "down",
-                "BTC 最新日 K 下跌",
-                "目前 BTC 在下跌，因此列表改為保留和 BTC 最新日 K 同方向下跌，且相關係數介於 0.70 到 1.00 的標的。"),
+                $"{baseDisplaySymbol} 最新日 K 下跌",
+                $"目前 {baseDisplaySymbol} 在下跌，因此列表改為保留和 {baseDisplaySymbol} 最新日 K 同方向下跌，且相關係數介於 {minCorrelation} 到 {maxCorrelation} 的標的。"),
             _ => (
                 "flat",
-                "BTC 最新日 K 持平",
-                "BTC 最新日 K 幾乎持平，因此本次以相關係數 0.70 到 1.00 為主，不額外限制方向。")
+                $"{baseDisplaySymbol} 最新日 K 持平",
+                $"{baseDisplaySymbol} 最新日 K 幾乎持平，因此本次以相關係數 {minCorrelation} 到 {maxCorrelation} 為主，不額外限制方向。")
         };
     }
 

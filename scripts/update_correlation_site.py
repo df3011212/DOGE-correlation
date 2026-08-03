@@ -12,8 +12,8 @@ HTML_PATH = DOCS_DIR / "index.html"
 TEXT_PATH = DOCS_DIR / "hot_symbols.txt"
 NOJEKYLL_PATH = DOCS_DIR / ".nojekyll"
 
-BASE_SYMBOL = "BTCUSDT"
-BASE_TRADINGVIEW_SYMBOL = "BTCUSDT.P"
+BASE_SYMBOL = "DOGEUSDT"
+BASE_TRADINGVIEW_SYMBOL = "DOGEUSDT.P"
 PRODUCT_TYPE = "usdt-futures"
 GRANULARITY = "1D"
 CANDLE_LIMIT = 20
@@ -125,7 +125,7 @@ def format_price(value: float) -> str:
 
 def build_payload() -> dict:
     session = requests.Session()
-    session.headers.update({"User-Agent": "BTC-correlation-dashboard/1.0"})
+    session.headers.update({"User-Agent": "DOGE-correlation-dashboard/1.0"})
 
     symbols = get_contract_symbols(session)
     if BASE_SYMBOL not in symbols:
@@ -133,20 +133,20 @@ def build_payload() -> dict:
 
     base_series = get_close_series(session, BASE_SYMBOL)
     if len(base_series) < CANDLE_LIMIT:
-        raise RuntimeError("BTC candle count is insufficient.")
+        raise RuntimeError(f"{BASE_TRADINGVIEW_SYMBOL} candle count is insufficient.")
 
     base_change = price_change_percent(base_series)
     btc_direction = trend_key(base_change)
 
     if btc_direction == "up":
-        direction_label = "BTC 最新日 K 上漲"
-        direction_rule = "只保留和 BTC 最新日 K 同方向上漲，且相關係數介於 0.70 到 1.00 的標的。"
+        direction_label = f"{BASE_TRADINGVIEW_SYMBOL} 最新日 K 上漲"
+        direction_rule = f"只保留和 {BASE_TRADINGVIEW_SYMBOL} 最新日 K 同方向上漲，且相關係數介於 {MIN_CORRELATION:.2f} 到 {MAX_CORRELATION:.2f} 的標的。"
     elif btc_direction == "down":
-        direction_label = "BTC 最新日 K 下跌"
-        direction_rule = "目前 BTC 在下跌，因此列表改為保留和 BTC 最新日 K 同方向下跌，且相關係數介於 0.70 到 1.00 的標的。"
+        direction_label = f"{BASE_TRADINGVIEW_SYMBOL} 最新日 K 下跌"
+        direction_rule = f"目前 {BASE_TRADINGVIEW_SYMBOL} 在下跌，因此列表改為保留和 {BASE_TRADINGVIEW_SYMBOL} 最新日 K 同方向下跌，且相關係數介於 {MIN_CORRELATION:.2f} 到 {MAX_CORRELATION:.2f} 的標的。"
     else:
-        direction_label = "BTC 最新日 K 持平"
-        direction_rule = "BTC 最新日 K 幾乎持平，因此本次以相關係數 0.70 到 1.00 為主，不額外限制方向。"
+        direction_label = f"{BASE_TRADINGVIEW_SYMBOL} 最新日 K 持平"
+        direction_rule = f"{BASE_TRADINGVIEW_SYMBOL} 最新日 K 幾乎持平，因此本次以相關係數 {MIN_CORRELATION:.2f} 到 {MAX_CORRELATION:.2f} 為主，不額外限制方向。"
 
     results = []
     for symbol in symbols:
@@ -197,7 +197,7 @@ def build_payload() -> dict:
     next_run = now + timedelta(minutes=15)
 
     return {
-        "title": "BTCUSDT.P 相關係數 (0.7~1.0) 日 K",
+        "title": f"{BASE_TRADINGVIEW_SYMBOL} 相關係數 ({MIN_CORRELATION:.1f}~{MAX_CORRELATION:.1f}) 日 K",
         "baseTradingViewSymbol": BASE_TRADINGVIEW_SYMBOL,
         "windowLabel": f"{GRANULARITY} x {CANDLE_LIMIT} 根 K 線",
         "correlationRangeLabel": f"{MIN_CORRELATION:.2f} ~ {MAX_CORRELATION:.2f}",
@@ -410,7 +410,7 @@ def render_html(data: dict) -> str:
         <p>
           GitHub Actions 每 15 分鐘自動更新一次，但相關係數是用 Bitget USDT 永續合約的
           {data['windowLabel']} 收盤價，計算 {data['baseTradingViewSymbol']} 與其他標的的日線同步程度，
-          並保留相關係數介於 {data['correlationRangeLabel']}、且和 BTC 最新日 K 方向一致的標的。
+          並保留相關係數介於 {data['correlationRangeLabel']}、且和 {data['baseTradingViewSymbol']} 最新日 K 方向一致的標的。
         </p>
         <div class="chips">
           <span class="chip">{data['windowLabel']}</span>
@@ -421,7 +421,7 @@ def render_html(data: dict) -> str:
       <div class="spotlight">
         <div class="dir trend-{data['btcDirection']}">{data['btcDirectionLabel']}</div>
         <div class="price trend-{data['btcDirection']}">{data['basePriceChangeText']}</div>
-        <div>BTC 最新價格 <strong>{data['baseLastCloseText']}</strong></div>
+        <div>{data['baseTradingViewSymbol']} 最新價格 <strong>{data['baseLastCloseText']}</strong></div>
         <div style="margin-top: 10px; color: var(--muted);">下次排程 {data['nextScheduledRefreshLocalText']}</div>
       </div>
     </section>

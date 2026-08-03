@@ -3,14 +3,14 @@ namespace TradingViewWebhookDashboard.Models;
 public sealed class CorrelationDashboardOptions
 {
     public const string SectionName = "CorrelationDashboard";
-    public const string DefaultPageTitle = "BTCUSDT.P 相關係數 (0.7~1.0) 日 K";
+    public const string DefaultPageTitle = "DOGEUSDT.P 相關係數 (0.7~1.0) 日 K";
     public const string DefaultDisplayTimeZoneId = "Asia/Taipei";
 
     public string PageTitle { get; set; } = DefaultPageTitle;
 
-    public string BaseSymbol { get; set; } = "BTCUSDT";
+    public string BaseSymbol { get; set; } = "DOGEUSDT";
 
-    public string BaseTradingViewSymbol { get; set; } = "BTCUSDT.P";
+    public string BaseTradingViewSymbol { get; set; } = "DOGEUSDT.P";
 
     public string ProductType { get; set; } = "usdt-futures";
 

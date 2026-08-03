@@ -10,7 +10,7 @@
         <h1>@Model.PageTitle</h1>
         <p class="hero-description">
             這個頁面會每 15 分鐘自動抓一次 Bitget 的 USDT 永續合約資料，但相關係數本身是使用最近 20 根日 K 收盤價，
-            比較 `BTCUSDT.P` 與其他幣種的日線同步程度，並保留相關係數介於 `0.70 ~ 1.00`、且和 BTC 最新日 K 方向一致的標的。
+            比較 @Model.InitialSnapshot.BaseTradingViewSymbol 與其他幣種的日線同步程度，並保留相關係數介於 @Model.InitialSnapshot.CorrelationRangeLabel、且和 @Model.InitialSnapshot.BaseTradingViewSymbol 最新日 K 方向一致的標的。
         </p>
         <div class="hero-badges">
             <span class="hero-chip">@Model.InitialSnapshot.WindowLabel</span>
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="hero-spotlight">
-        <span class="spotlight-label">BTC 最新日 K</span>
+        <span class="spotlight-label">@Model.InitialSnapshot.BaseTradingViewSymbol 最新日 K</span>
         <strong id="btc-direction-pill" class="direction-pill direction-pill--@Model.InitialSnapshot.BtcDirection">
             @Model.InitialSnapshot.BtcDirectionLabel
         </strong>

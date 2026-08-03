@@ -32,5 +32,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/index.html docs/correlation-data.json docs/hot_symbols.txt docs/.nojekyll
-          git commit -m "Update BTC correlation dashboard" || exit 0
+          git commit -m "Update DOGE correlation dashboard" || exit 0
           git push
