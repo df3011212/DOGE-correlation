@@ -4,29 +4,16 @@
   "windowLabel": "1D x 20 根 K 線",
   "correlationRangeLabel": "0.70 ~ 1.00",
   "marketLabel": "Bitget USDT 永續合約",
-  "updatedAtLocalText": "2026-08-12 00:41:14",
-  "nextScheduledRefreshLocalText": "2026-08-12 00:56:14",
+  "updatedAtLocalText": "2026-08-12 01:45:06",
+  "nextScheduledRefreshLocalText": "2026-08-12 02:00:06",
   "refreshIntervalMinutes": 15,
-  "btcDirection": "down",
-  "btcDirectionLabel": "DOGEUSDT.P 最新日 K 下跌",
-  "basePriceChangePercent": -0.0567,
-  "basePriceChangeText": "-0.06%",
-  "baseLastCloseText": "0.07051",
+  "btcDirection": "up",
+  "btcDirectionLabel": "DOGEUSDT.P 最新日 K 上漲",
+  "basePriceChangePercent": 0.3969,
+  "basePriceChangeText": "+0.40%",
+  "baseLastCloseText": "0.07083",
   "totalSymbolsScanned": 743,
-  "matchedCount": 1,
-  "directionRuleText": "目前 DOGEUSDT.P 在下跌，因此列表改為保留和 DOGEUSDT.P 最新日 K 同方向下跌，且相關係數介於 0.70 到 1.00 的標的。",
-  "results": [
-    {
-      "symbol": "EULUSDT",
-      "tradingViewSymbol": "EULUSDT.P",
-      "correlation": 0.7137,
-      "correlationText": "0.7137",
-      "priceChangePercent": -1.7316,
-      "priceChangeText": "-1.73%",
-      "latestClose": 1.135,
-      "latestCloseText": "1.135",
-      "directionLabel": "同方向",
-      "trend": "down"
-    }
-  ]
+  "matchedCount": 0,
+  "directionRuleText": "只保留和 DOGEUSDT.P 最新日 K 同方向上漲，且相關係數介於 0.70 到 1.00 的標的。",
+  "results": []
 }
